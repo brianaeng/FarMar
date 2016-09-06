@@ -9,10 +9,6 @@ describe 'product class methods' do
 
   it 'must return the instance of a specific object when an id is passed through self.find(id)' do
     FarMar::Product.make_products
-    expect(FarMar::Product.find(1)).must_equal({
-           :id => 1,
-         :name => "Dry Beets",
-    :vendor_id => 1
-    })
+    expect(FarMar::Product.find(1).name).must_equal("Dry Beets")
   end
 end

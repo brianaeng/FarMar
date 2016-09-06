@@ -9,14 +9,6 @@ describe 'market class methods' do
 
   it 'must return the instance of a specific object when an id is passed through self.find(id)' do
     FarMar::Market.make_markets
-    expect(FarMar::Market.find(9)).must_equal({
-         :id => 9,
-       :name => "Farmers Market at Christopher Newport University",
-    :address => "1 Avenue of the Arts",
-       :city => "Newport News",
-     :county => "Newport News",
-      :state => "Virginia",
-        :zip => "23606"
-    })
+    expect(FarMar::Market.find(9).state).must_equal("Virginia")
   end
 end

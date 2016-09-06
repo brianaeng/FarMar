@@ -9,6 +9,6 @@ describe 'sale class methods' do
 
   it 'must return the instance of a specific object when an id is passed through self.find(id)' do
     FarMar::Sale.make_sales
-    expect(FarMar::Sale.find(13)[:amount]).must_equal(3450)
+    expect(FarMar::Sale.find(13).amount).must_equal(3450)
   end
 end

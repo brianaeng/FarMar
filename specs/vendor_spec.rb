@@ -9,11 +9,6 @@ describe 'vendor class methods' do
 
   it 'must return the instance of a specific object when an id is passed through self.find(id)' do
     FarMar::Vendor.make_vendors
-    expect(FarMar::Vendor.find(2643)).must_equal({
-                     :id => 2643,
-                   :name => "Crooks, Kemmer and Green",
-        :no_of_employees => 4,
-              :market_id => 490
-    })
+    expect(FarMar::Vendor.find(2643).no_of_employees).must_equal(4)
   end
 end
