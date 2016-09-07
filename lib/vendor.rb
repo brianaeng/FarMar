@@ -1,4 +1,3 @@
-require_relative '../far_mar'
 require 'csv'
 
 class FarMar::Vendor
@@ -31,4 +30,58 @@ class FarMar::Vendor
       end
     end
   end
+
+  def market
+    all_markets = FarMar::Market.all
+    all_markets.each do |market|
+      if market.id == self.market_id
+        return market
+      end
+    end
+  end
+
+  def products
+    collection = []
+
+    all_products = FarMar::Product.all
+    all_products.each do |product|
+      if product.vendor_id == self.id
+        collection.push(product)
+      end
+    end
+
+    return collection
+  end
+
+  def sales
+    collection = []
+
+    all_sales = FarMar::Sale.all
+    all_sales.each do |sale|
+      if sale.vendor_id == self.id
+        collection.push(sale)
+      end
+    end
+
+    return collection
+  end
+
+  def revenue
+    sales_array = self.sales
+    total = 0
+
+    sales_array.each do |sale|
+      total += sale.amount
+    end
+
+    return total
+  end
+
+  def self.by_market(market_id)
+    markets_array = FarMar::Market.all
+    selected_market = markets_array[market_id - 1]
+
+    selected_market.vendors
+  end
+
 end
