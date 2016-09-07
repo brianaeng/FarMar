@@ -1,5 +1,3 @@
-require_relative '../far_mar'
-require_relative 'vendor'
 require 'csv'
 
 class FarMar::Market
@@ -24,6 +22,7 @@ class FarMar::Market
   end
 
   def self.all
+    FarMar::Market.make_markets
     return @markets
   end
 
@@ -56,7 +55,3 @@ class FarMar::Market
   end
 
 end
-
-# FarMar::Market.make_markets
-# testing = FarMar::Market.all
-# ap testing[492].vendors
