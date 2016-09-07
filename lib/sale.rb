@@ -1,4 +1,3 @@
-require_relative '../far_mar'
 require 'csv'
 
 class FarMar::Sale
@@ -22,6 +21,7 @@ class FarMar::Sale
   end
 
   def self.all
+    FarMar::Sale.make_sales
     return @sales
   end
 
