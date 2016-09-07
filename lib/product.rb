@@ -1,4 +1,3 @@
-require_relative '../far_mar'
 require 'csv'
 
 class FarMar::Product
@@ -19,6 +18,7 @@ class FarMar::Product
   end
 
   def self.all
+    FarMar::Product.make_products
     return @products
   end
 
@@ -29,4 +29,18 @@ class FarMar::Product
       end
     end
   end
+
+  def vendor
+    all_vendors = FarMar::Vendor.all
+    all_vendors.each do |vendor|
+      if vendor.id == self.vendor_id
+        return vendor
+      end
+    end
+  end
+
 end
+
+#sales: returns a collection of FarMar::Sale instances that are associated using the FarMar::Sale product_id field.
+#number_of_sales: returns the number of times this product has been sold.
+#self.by_vendor(vendor_id): returns all of the products with the given vendor_id
