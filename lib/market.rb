@@ -3,7 +3,7 @@ require_relative 'vendor'
 require 'csv'
 
 class FarMar::Market
-  attr_accessor :markets, :id, :name, :address, :city, :county, :state, :zip, :collection
+  attr_accessor :markets, :id, :name, :address, :city, :county, :state, :zip
 
   def initialize(market_hash)
     @id = market_hash[:id]
@@ -36,20 +36,27 @@ class FarMar::Market
   end
 
   def vendors
-    @collection = []
+    collection = []
 
-    CSV.foreach("/Users/brianaeng/ada/week5/FarMar/support/vendors.csv") do |line|
-      if line[3] = self.id
-        hash = FarMar::Vendor.new({id: line[0].to_i, name: line[1], no_of_employees: line[2].to_i, market_id: line[3].to_i})
-        @collection.push(hash)
+    all_vendors = FarMar::Vendor.all
+    all_vendors.each do |vendor|
+      if vendor.market_id == self.id
+        collection.push(vendor)
       end
     end
 
-    return @collection
+    # CSV.foreach("/Users/brianaeng/ada/week5/FarMar/support/vendors.csv") do |line|
+    #   if line[3].to_i == self.id
+    #     hash = FarMar::Vendor.new({id: line[0].to_i, name: line[1], no_of_employees: line[2].to_i, market_id: line[3].to_i})
+    #     collection.push(hash)
+    #   end
+    # end
+
+    return collection
   end
 
 end
 
 # FarMar::Market.make_markets
 # testing = FarMar::Market.all
-# ap testing[0].vendors
+# ap testing[492].vendors

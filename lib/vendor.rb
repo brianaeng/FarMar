@@ -20,6 +20,7 @@ class FarMar::Vendor
   end
 
   def self.all
+    FarMar::Vendor.make_vendors
     return @vendors
   end
 
