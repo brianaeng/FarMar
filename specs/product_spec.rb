@@ -1,7 +1,7 @@
 require_relative 'spec_helper'
-require_relative '../lib/product'
+require_relative '../far_mar'
 
-describe 'FarMar::Product class methods' do
+describe 'FarMar::Product methods' do
   before do
     FarMar::Product.make_products
   end
