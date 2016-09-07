@@ -44,7 +44,7 @@ describe 'FarMar::Vendor methods' do
     expect(found_sales[0].class).must_equal(FarMar::Sale)
   end
 
-  it 'must return an integer when revenue is called' do
+  it 'must return a fixnum when revenue is called' do
     testing6 = FarMar::Vendor.all
 
     expect(testing6[5].revenue.class).must_equal(Fixnum)
