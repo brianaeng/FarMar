@@ -32,4 +32,41 @@ class FarMar::Sale
       end
     end
   end
+
+  def vendor
+    all_vendors = FarMar::Vendor.all
+    all_vendors.each do |vendor|
+      if vendor.id == self.vendor_id
+        return vendor
+      end
+    end
+  end
+
+  def product
+    all_products = FarMar::Product.all
+    all_products.each do |product|
+      if product.id == self.product_id
+        return product
+      end
+    end
+  end
+
+  def self.between(beginning_time, end_time)
+    collection = []
+    start_time = DateTime.parse(beginning_time)
+    end_time = DateTime.parse(end_time)
+
+    all_sales = FarMar::Sale.all
+    all_sales.each do |sale|
+      # if start_time < sale.purchase_time < end_time
+      #   collection.push(sale)
+      # end
+      if sale.purchase_time.between?(start_time, end_time)
+        collection.push(sale)
+      end
+    end
+
+    return collection
+  end
+
 end

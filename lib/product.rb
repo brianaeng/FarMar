@@ -39,8 +39,29 @@ class FarMar::Product
     end
   end
 
-end
+  def sales
+    collection = []
 
-#sales: returns a collection of FarMar::Sale instances that are associated using the FarMar::Sale product_id field.
-#number_of_sales: returns the number of times this product has been sold.
-#self.by_vendor(vendor_id): returns all of the products with the given vendor_id
+    all_sales = FarMar::Sale.all
+    all_sales.each do |sale|
+      if sale.product_id == self.id
+        collection.push(sale)
+      end
+    end
+
+    return collection
+  end
+
+  def number_of_sales
+    total_sales = self.sales
+    return total_sales.length
+  end
+
+  def self.by_vendor(vendor_id)
+    vendor_array = FarMar::Vendor.all
+    selected_vendors = vendor_array[vendor_id - 1]
+
+    selected_vendors.products
+  end
+
+end
