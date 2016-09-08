@@ -1,44 +1,41 @@
-require 'csv'
-
 class FarMar::Product
-  attr_accessor :products, :id, :name, :vendor_id
+  attr_accessor :id, :name, :vendor_id
 
+  #Initializes FarMar::Product object with id, name, and vendor id
   def initialize(product_hash)
     @id = product_hash[:id]
     @name = product_hash[:name]
     @vendor_id = product_hash[:vendor_id]
   end
 
-  def self.make_products
-    @products = []
+  #Class method to make and return the array of FarMar::Product objects from the information in products.csv
+  def self.all
+    products = []
+
     CSV.foreach("/Users/brianaeng/ada/week5/FarMar/support/products.csv") do |line|
       product_hash = FarMar::Product.new({id: line[0].to_i, name: line[1], vendor_id: line[2].to_i})
-      @products.push(product_hash)
+      products.push(product_hash)
     end
+
+    return products
   end
 
-  def self.all
-    FarMar::Product.make_products
-    return @products
-  end
-
+  #Class method to return a specific FarMar::Product object with a given id
   def self.find(id)
-    @products.each do |product|
+    products = FarMar::Product.all
+    products.each do |product|
       if product.id == id
         return product
       end
     end
   end
 
+  #Instance method to return a specific FarMar::Vendor object linked to the FarMar::Product object
   def vendor
-    all_vendors = FarMar::Vendor.all
-    all_vendors.each do |vendor|
-      if vendor.id == self.vendor_id
-        return vendor
-      end
-    end
+    FarMar::Vendor.find(self.vendor_id)
   end
 
+  #Instance method to return an array of FarMar::Sales objects linked to the FarMar::Product object
   def sales
     collection = []
 
@@ -52,16 +49,24 @@ class FarMar::Product
     return collection
   end
 
+  #Instance method to calculate and return the total # of sales for the FarMar::Product object
   def number_of_sales
     total_sales = self.sales
     return total_sales.length
   end
 
+  #Class method to return an array of FarMar::Product objects with the given vendor_id
   def self.by_vendor(vendor_id)
-    vendor_array = FarMar::Vendor.all
-    selected_vendors = vendor_array[vendor_id - 1]
+    collection = []
 
-    selected_vendors.products
+    products_array = self.all
+    products_array.each do |product|
+      if product.vendor_id == vendor_id
+        collection.push(product)
+      end
+    end
+
+    return collection
   end
 
 end

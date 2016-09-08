@@ -1,8 +1,7 @@
-require 'csv'
-
 class FarMar::Market
-  attr_accessor :markets, :id, :name, :address, :city, :county, :state, :zip
+  attr_accessor :id, :name, :address, :city, :county, :state, :zip
 
+  #Initializes FarMar::Market object with id, name, address, city, county, state, and zip
   def initialize(market_hash)
     @id = market_hash[:id]
     @name = market_hash[:name]
@@ -13,45 +12,45 @@ class FarMar::Market
     @zip = market_hash[:zip]
   end
 
-  def self.make_markets
-    @markets = []
+  #Class method to make and return the array of FarMar::Market objects from the information in markets.csv
+  def self.all
+    markets = []
+
     CSV.foreach("/Users/brianaeng/ada/week5/FarMar/support/markets.csv") do |line|
       market_hash = FarMar::Market.new({id: line[0].to_i, name: line[1], address: line[2], city: line[3], county: line[4], state: line[5], zip: line[6]})
-      @markets.push(market_hash)
+      markets.push(market_hash)
     end
+
+    return markets
   end
 
-  def self.all
-    FarMar::Market.make_markets
-    return @markets
-  end
-
+  #Class method to return a specific FarMar::Market object with a given id
   def self.find(id)
-    @markets.each do |market|
+    markets = FarMar::Market.all
+    markets.each do |market|
       if market.id == id
         return market
       end
     end
   end
 
+  #Instance method to return an array of FarMar::Vendor objects linked to the FarMar::Market object
   def vendors
-    collection = []
+    FarMar::Vendor.by_market(self.id)
+  end
 
-    all_vendors = FarMar::Vendor.all
-    all_vendors.each do |vendor|
-      if vendor.market_id == self.id
-        collection.push(vendor)
-      end
-    end
+  def products #No clue if this is right
+    vendors_array = self.vendors
+    vendors_id = vendors_array[0].id
 
-    # CSV.foreach("/Users/brianaeng/ada/week5/FarMar/support/vendors.csv") do |line|
-    #   if line[3].to_i == self.id
-    #     hash = FarMar::Vendor.new({id: line[0].to_i, name: line[1], no_of_employees: line[2].to_i, market_id: line[3].to_i})
-    #     collection.push(hash)
-    #   end
-    # end
-
-    return collection
+    FarMar::Product.by_vendor(vendors_id)
   end
 
 end
+
+#products returns a collection of FarMar::Product instances that are associated to the market through the FarMar::Vendor class.
+#self.search(search_term) returns a collection of FarMar::Market instances where the market name or vendor name contain the search_term. For example FarMar::Market.search('school') would return 3 results, one being the market with id 75 (Fox School Farmers FarMar::Market).
+#prefered_vendor: returns the vendor with the highest revenue
+#prefered_vendor(date): returns the vendor with the highest revenue for the given date
+#worst_vendor: returns the vendor with the lowest revenue
+#worst_vendor(date): returns the vendor with the lowest revenue on the given date
