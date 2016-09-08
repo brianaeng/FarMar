@@ -11,7 +11,6 @@ describe 'FarMar::Vendor methods' do
   end
 
   it 'must return a specific Vendor instance when an id is passed through self.find(id)' do
-    FarMar::Vendor.all
     testing2 = FarMar::Vendor.find(167)
 
     expect(testing2.class).must_equal(FarMar::Vendor)
@@ -51,7 +50,6 @@ describe 'FarMar::Vendor methods' do
   end
 
   it 'must return an array of specific FarMar::Vendor instances when self.by_market(market_id) is called' do
-    FarMar::Vendor.all
     testing7 = FarMar::Vendor.by_market(7)
 
     expect(testing7[0].market_id).must_equal(7)

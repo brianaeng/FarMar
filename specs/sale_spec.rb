@@ -11,11 +11,11 @@ describe 'FarMar::Sale methods' do
   end
 
   it 'must return a specific Sale instance when an id is passed through self.find(id)' do
-    FarMar::Sale.all
     testing2 = FarMar::Sale.find(10858)
 
     expect(testing2.class).must_equal(FarMar::Sale)
     expect(testing2.id).must_equal(10858)
+    expect(testing2.amount).must_equal(9399)
   end
 
   it 'must return one specific FarMar::Vendor instance when vendor is called' do
@@ -35,7 +35,6 @@ describe 'FarMar::Sale methods' do
   end
 
   it 'must return an array of FarMar::Sale instances between a specific time' do
-    FarMar::Sale.all
     found_sales = FarMar::Sale.between('2013-11-08 04:31:41 -0800', '2013-11-08 05:19:05 -0800')
 
     expect(found_sales.class).must_equal(Array)

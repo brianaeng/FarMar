@@ -11,11 +11,11 @@ describe 'FarMar::Product methods' do
   end
 
   it 'must return a specific Vendor instance when an id is passed through self.find(id)' do
-    FarMar::Product.all
     testing2 = FarMar::Product.find(496)
 
     expect(testing2.class).must_equal(FarMar::Product)
     expect(testing2.id).must_equal(496)
+    expect(testing2.name).must_equal("Splendid Fruit")
   end
 
   it 'must return one specific FarMar::Vendor instance when vendor is called' do
@@ -24,6 +24,7 @@ describe 'FarMar::Product methods' do
 
     expect(found_vendor.class).must_equal(FarMar::Vendor)
     expect(found_vendor.id).must_equal(testing3[5].vendor_id)
+    expect(found_vendor.name).must_equal("Kris and Sons")
   end
 
   it 'must return an array of FarMar::Sale instances when sales is called' do
@@ -39,10 +40,10 @@ describe 'FarMar::Product methods' do
     testing5 = FarMar::Product.all
 
     expect(testing5[100].number_of_sales.class).must_equal(Fixnum)
+    expect(testing5[100].number_of_sales).must_equal(3)
   end
 
   it 'must return an array of specific FarMar::Product instances when self.by_vendor(vendor_id) is called' do
-    FarMar::Product.all
     testing6 = FarMar::Product.by_vendor(25)
 
     expect(testing6[0].vendor_id).must_equal(25)
