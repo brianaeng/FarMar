@@ -30,3 +30,7 @@ require_relative 'lib/vendor'
 # #PRODUCT INSTANCE METHODS
 # testing6 = FarMar::Product.all
 # ap testing6[166].vendor
+#
+# # SALE INSTANCE METHODS
+# FarMar::Sale.all
+# ap FarMar::Sale.between('2013-11-08 04:31:41 -0800', '2013-11-08 05:19:05 -0800')
