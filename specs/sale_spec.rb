@@ -34,11 +34,11 @@ describe 'FarMar::Sale methods' do
     expect(found_product.id).must_equal(testing4[86].product_id)
   end
 
-  # it 'must return an array of FarMar::Sale instances between a specific time' do
-  #   FarMar::Sale.all
-  #   found_sales = FarMar::Sale.between(BEGINNING TIME, END TIME)
-  #
-  #   expect(found_sales.class).must_equal(Array)
-  #   expect(found_sales[0].class).must_equal(FarMar::Sale)
-  # end
+  it 'must return an array of FarMar::Sale instances between a specific time' do
+    FarMar::Sale.all
+    found_sales = FarMar::Sale.between('2013-11-08 04:31:41 -0800', '2013-11-08 05:19:05 -0800')
+
+    expect(found_sales.class).must_equal(Array)
+    expect(found_sales[0].class).must_equal(FarMar::Sale)
+  end
 end
