@@ -25,7 +25,7 @@ require_relative 'lib/vendor'
 # testing5 = FarMar::Vendor.all
 # ap testing5[0].revenue
 #
-# ap FarMar::Vendor.by_market(1)
+# ap FarMar::Vendor.by_market(43)
 #
 # #PRODUCT INSTANCE METHODS
 # testing6 = FarMar::Product.all
