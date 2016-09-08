@@ -1,0 +1,2 @@
+3. move methods to module?
+4. add error message for if someone tries to use find on an id that doesn't exist
