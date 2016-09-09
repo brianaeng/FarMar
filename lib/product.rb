@@ -70,3 +70,6 @@ class FarMar::Product
   end
 
 end
+
+# #To do:
+#self.most_revenue(n) returns the top n product instances ranked by total revenue

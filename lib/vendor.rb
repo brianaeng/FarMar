@@ -80,4 +80,34 @@ class FarMar::Vendor
     return collection
   end
 
+  #Class method to return the top n FarMar::Vendor instances ranked by total revenue
+  def self.most_revenue(n)
+    all_vendors = self.all
+
+    collection = []
+
+    all_vendors.each do |vendor|
+      total_revenue = vendor.revenue
+      vendor_instance = {vendor: vendor, revenue: total_revenue}
+      collection.push(vendor_instance)
+    end
+
+    new_collection = collection.sort_by { |hash| hash[:revenue] }.reverse
+
+    counter = 0
+    instances = []
+
+    n.times do
+      instances.push(new_collection[counter][:vendor])
+      counter += 1
+    end
+
+    return instances
+  end
+
 end
+
+# #To do:
+# self.most_items(n) returns the top n vendor instances ranked by total number of items sold
+# self.revenue(date) returns the total revenue for that date across all vendors
+#revenue(date) returns the total revenue for that specific purchase date and vendor instance

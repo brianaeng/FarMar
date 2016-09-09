@@ -39,18 +39,81 @@ class FarMar::Market
     FarMar::Vendor.by_market(self.id)
   end
 
-  def products #No clue if this is right
+  #Instance method to return a collection of FarMar::Product instances associated to the given market through the associated FarMar::Vendor instance(s)
+  def products
+    collection = []
     vendors_array = self.vendors
-    vendors_id = vendors_array[0].id
 
-    FarMar::Product.by_vendor(vendors_id)
+    vendors_array.each do |vendor|
+      collection += FarMar::Product.by_vendor(vendor.id)
+    end
+
+    return collection
+  end
+
+  #Class method to return a collection of FarMar::Market objects associated with markets or vendors that contain the given search_term
+  def self.search(search_term)
+    search_term.downcase!
+
+    markets = FarMar::Market.all
+    vendors = FarMar::Vendor.all
+    collection = []
+
+    markets.each do |market|
+      if (market.name.downcase).include? search_term
+        collection.push(market)
+      end
+    end
+
+    vendors.each do |vendor|
+      if (vendor.name.downcase).include? search_term
+        collection.push(vendor.market)
+      end
+    end
+
+    return collection
+
+  end
+
+  #Instance method to return the vendor with the highest revenue associated with the FarMar::Market object
+  def prefered_vendor
+    vendors_array = vendors
+
+    highest_revenue = 0
+    best_vendor = nil
+
+    vendors_array.each do |vendor|
+      vendor_revenue = vendor.revenue
+      if vendor_revenue > highest_revenue
+        highest_revenue = vendor_revenue
+        best_vendor = vendor
+      end
+    end
+
+    return best_vendor
+  end
+
+  # #Instance method to return the vendor with the lowest revenue associated with the FarMar::Market object
+  def worst_vendor
+    vendors_array = vendors
+
+    lowest_revenue = 10000000
+    bad_vendor = nil
+
+    vendors_array.each do |vendor|
+      vendor_revenue = vendor.revenue
+      if vendor_revenue < lowest_revenue
+        lowest_revenue = vendor_revenue
+        bad_vendor = vendor
+      end
+    end
+
+    return bad_vendor
+
   end
 
 end
 
-#products returns a collection of FarMar::Product instances that are associated to the market through the FarMar::Vendor class.
-#self.search(search_term) returns a collection of FarMar::Market instances where the market name or vendor name contain the search_term. For example FarMar::Market.search('school') would return 3 results, one being the market with id 75 (Fox School Farmers FarMar::Market).
-#prefered_vendor: returns the vendor with the highest revenue
+# #To do:
 #prefered_vendor(date): returns the vendor with the highest revenue for the given date
-#worst_vendor: returns the vendor with the lowest revenue
 #worst_vendor(date): returns the vendor with the lowest revenue on the given date
